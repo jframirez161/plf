@@ -1,0 +1,126 @@
+/* ImagesPage.css */
+
+.images-page {
+  width: 100%;
+  background-color: #f9f9f9;
+}
+
+.media-section {
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-content {
+  max-width: 800px;
+  text-align: center;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.media {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.headline {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.description {
+  font-size: 1.2em;
+  color: #555;
+}
+
+
+.panel.dark {
+  height: 100vh;            /* La sección ocupa toda la altura de la ventana */
+  display: flex;            /* Utiliza flexbox para centrar el contenido */
+  flex-direction: column;   /* Alinea los elementos en una columna */
+  justify-content: center;  /* Centra verticalmente */
+  align-items: center;      /* Centra horizontalmente */
+  background-color: #1e1e1e; /* Color de fondo oscuro */
+  text-align: center;
+  padding: 20px;
+}
+
+.stylized-image {
+  width: 80%;             /* Asegura que la imagen ocupe todo el ancho disponible */
+  max-width: 100%;         /* Evita que la imagen sobrepase el contenedor */
+  height: auto;            /* Mantiene la proporción de la imagen */
+  object-fit: cover;       /* Cubre el contenedor sin perder la proporción de la imagen */
+  border-radius: 10px;     /* Añade bordes redondeados si es necesario */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra estilizada */
+}
+
+
+
+
+
+
+
+
+
+
+.images-page {
+  width: 100%;
+  background-color: #f9f9f9;
+}
+
+.media-section {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.media-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.media {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.headline {
+  font-size: 2em;
+  margin-top: 20px;
+  color: #333;
+}
+
+.description {
+  font-size: 1.2em;
+  margin-top: 10px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .media {
+    width: 100%;
+  }
+
+  .headline {
+    font-size: 1.5em;
+  }
+
+  .description {
+    font-size: 1em;
+  }
+}
+
+

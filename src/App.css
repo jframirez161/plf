@@ -13,6 +13,13 @@
   }
 }
 
+@font-face {
+  font-family: 'PPMori';
+  src: url('/fonts/PPMori-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +42,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.panel.dark {
+  position: relative; /* Para asegurarse de que los elementos dentro tengan una jerarquía correcta */
+  z-index: 1;         /* Controla la capa de la sección */
+}
+
+.stylized-image {
+  position: relative; /* Asegura que la imagen no se superponga indebidamente */
+  z-index: 0;         /* Coloca la imagen debajo de otros elementos, si es necesario */
 }

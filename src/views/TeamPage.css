@@ -1,0 +1,46 @@
+.team-page {
+  padding: 20px;
+}
+
+.team-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.team-section {
+  flex: 1;
+  max-width: 30%; /* Make sure three items fit in a row */
+  text-align: center;
+}
+
+.team-content {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.name {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.role {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #555;
+}
+
+.bio {
+  font-size: 1em;
+  color: #666;
+  margin-top: 10px;
+}
