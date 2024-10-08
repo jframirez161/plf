@@ -1,3 +1,5 @@
+/* Existing Styles */
+
 .App {
   text-align: center;
 }
@@ -14,9 +16,9 @@
 }
 
 @font-face {
-  font-family: 'PPMori';
-  src: url('/fonts/PPMori-Regular.woff') format('woff');
-  font-weight: normal;
+  font-family: 'PPMori-SemiBold';
+  src: url('./fonts/PPMori-SemiBold.woff') format('woff');
+  font-weight: 600;
   font-style: normal;
 }
 
@@ -44,13 +46,38 @@
   }
 }
 
-
 .panel.dark {
-  position: relative; /* Para asegurarse de que los elementos dentro tengan una jerarquía correcta */
-  z-index: 1;         /* Controla la capa de la sección */
+  position: relative; /* Ensures correct layering of elements */
+  z-index: 1;         /* Controls the stacking order */
 }
 
 .stylized-image {
-  position: relative; /* Asegura que la imagen no se superponga indebidamente */
-  z-index: 0;         /* Coloca la imagen debajo de otros elementos, si es necesario */
+  position: relative; /* Prevents image overlap */
+  z-index: 0;         /* Places image below other elements if necessary */
 }
+
+
+.video-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center; /* Center the gallery */
+  margin-top: 20px;
+}
+
+.video-item {
+  flex: 1 1 200px; /* Allow items to flex but have a base width of 200px */
+  max-width: 200px;
+  text-align: center;
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  object-fit: cover; /* Ensure the image covers the container without distortion */
+}
+
+
