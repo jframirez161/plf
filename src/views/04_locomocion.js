@@ -102,7 +102,6 @@ const ImagesPage = () => {
     if (event.target.files && event.target.files[0]) {
       setError(null);
       setZipFileUrl(null);
-      setError(null);
       const file = event.target.files[0];
       setUploadedVideo(URL.createObjectURL(file));
       setProcessedVideo(null);
@@ -111,9 +110,10 @@ const ImagesPage = () => {
       const formData = new FormData();
       formData.append('video', file);
 
-      setLoading(true);
-      try {/* localhost:5000       locomotion-back-dd2a64067227.herokuapp.com */
-        const response = await axios.post('https://locomotion-back-dd2a64067227.herokuapp.com/process-video', formData, {
+            
+     setLoading(true);
+      try {/* localhost:5000 locomotion-back-d60dee4c012c.herokuapp.com */
+        const response = await axios.post('http://localhost:5000/process-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -197,7 +197,7 @@ const ImagesPage = () => {
       </div>
     )}*/
     
-
+    
 return (
   <main className="images-page">
     {/* Section with the image */}
@@ -323,13 +323,6 @@ return (
       </div>
     )}
 
-{zipFileUrl && (
-      <div>
-        <a href={zipFileUrl} download="results.zip" className="download-link">
-          Descargar Archivo ZIP
-        </a>
-      </div>
-    )}
 
 
         {processedImage && (
