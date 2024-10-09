@@ -113,7 +113,7 @@ const ImagesPage = () => {
 
       setLoading(true);
       try {/* localhost:5000       locomotion-back-dd2a64067227.herokuapp.com */
-        const response = await axios.post('http://locomotion-back-dd2a64067227.herokuapp.com/process-video', formData, {
+        const response = await axios.post('https://locomotion-back-dd2a64067227.herokuapp.com/process-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -319,6 +319,14 @@ return (
           className="download-link"
         >
           Descargar Video Procesado
+        </a>
+      </div>
+    )}
+
+{zipFileUrl && (
+      <div>
+        <a href={zipFileUrl} download="results.zip" className="download-link">
+          Descargar Archivo ZIP
         </a>
       </div>
     )}
