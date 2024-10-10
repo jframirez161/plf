@@ -19,8 +19,6 @@ const ImagesPage = () => {
   const [processedImage, setProcessedImage] = useState(null); // Added state for processed image
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-    
-  const [zipFileUrl, setZipFileUrl] = useState(null);
 
   // Scroll to top on component mount
   useEffect(() => {
@@ -78,16 +76,6 @@ const ImagesPage = () => {
     };
   }, []);
 
-    
-    useEffect(() => {
-      return () => {
-        if (zipFileUrl) {
-          URL.revokeObjectURL(zipFileUrl);
-        }
-      };
-    }, [zipFileUrl]);
-
-    
   // Add references to each section
   const addToRefs = (el) => {
     if (el && !sectionsRef.current.includes(el)) {
@@ -101,7 +89,6 @@ const ImagesPage = () => {
   const handleVideoUpload = async (event) => {
     if (event.target.files && event.target.files[0]) {
       setError(null);
-      setZipFileUrl(null);
       const file = event.target.files[0];
       setUploadedVideo(URL.createObjectURL(file));
       setProcessedVideo(null);
@@ -110,36 +97,27 @@ const ImagesPage = () => {
       const formData = new FormData();
       formData.append('video', file);
 
-            
-     setLoading(true);
-      try {/* localhost:5000 locomotion-back-d60dee4c012c.herokuapp.com */
+      setLoading(true);
+      try {/* localhost:5000  locomotion-back-d60dee4c012c.herokuapp.com */
         const response = await axios.post('http://locomotion-back-d60dee4c012c.herokuapp.com/process-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
           responseType: 'blob', // Important for handling binary data
         });
-          
-        // Create a Blob URL for the ZIP file
-        const zipBlob = new Blob([response.data], { type: 'application/zip' });
-        const zipUrl = URL.createObjectURL(zipBlob);
-        setZipFileUrl(zipUrl);
-
 
         // Load the zip file using JSZip
         const zip = await JSZip.loadAsync(response.data);
 
         // Extract video
-        const videoFile = zip.file("processed_video.webm"); 
+        const videoFile = zip.file("processed_video.webm");
         if (videoFile) {
           const videoData = await videoFile.async("blob");
-          const videoBlob = new Blob([videoData], { type: 'video/webm' }); 
+          const videoBlob = new Blob([videoData], { type: 'video/webm' });
           const videoUrl = URL.createObjectURL(videoBlob);
           setProcessedVideo(videoUrl);
-        } else {
-          console.error("Processed video file not found in the ZIP archive.");
-          setError('No se encontró el video procesado en el archivo recibido.');
         }
+
         // Extract image
         const imageFile = zip.file("image.jpg");
         if (imageFile) {
@@ -189,15 +167,7 @@ const ImagesPage = () => {
     },
   ];
     
-    /* {zipFileUrl && (
-      <div>
-        <a href={zipFileUrl} download="results.zip" className="download-link">
-          Descargar Archivo ZIP
-        </a>
-      </div>
-    )}*/
-    
-    
+
 return (
   <main className="images-page">
     {/* Section with the image */}
@@ -303,27 +273,24 @@ return (
           ))}
         </div>
 
-    {processedVideo && (
-      <div>
-        <h3 style={{ color: '#000000' }}>Video Procesado:</h3>
-        <video
-          className="media"
-          src={processedVideo}
-          controls
-          aria-label="Processed video with skeleton"
-          type="video/webm"
-        />
-        <a
-          href={processedVideo}
-          download="processed_video.webm"
-          className="download-link"
-        >
-          Descargar Video Procesado
-        </a>
-      </div>
-    )}
-
-
+        {processedVideo && (
+          <div>
+            <h3 style={{ color: '#000000' }}>Video Procesado:</h3>
+            <video
+              className="media"
+              src={processedVideo}
+              controls
+              aria-label="Processed video with skeleton"
+            />
+            <a
+              href={processedVideo}
+              download="processed_video.webm"
+              className="download-link"
+            >
+              Descargar Video Procesado
+            </a>
+          </div>
+        )}
 
         {processedImage && (
           <div>
