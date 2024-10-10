@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@ffmpeg/core": "^0.12.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
     "@gsap/react": "^2.1.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
