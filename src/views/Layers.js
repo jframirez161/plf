@@ -131,7 +131,7 @@ export default function Layers() {
         </Link>      
       </section>
 
-      <section className="panel orange">   
+      <section className="panel light">   
       <h1 ref={titleRef}>Conteo Automático de Animales</h1>
         <Link to="/contador">
           <img
@@ -154,8 +154,7 @@ export default function Layers() {
       </section>
 
 
-
-      <section className="panel orange">        
+      <section className="panel light">        
       <h1 ref={titleRef}>Detección Temprana de Problemas de Locomoción</h1>
         <Link to="/locomocion">
           <img

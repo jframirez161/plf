@@ -34,7 +34,7 @@
 :root {
   --color-shockingly-green: #0ae448;
   --color-just-black: #0e100f;
-  --color-surface-white: #fffce1;
+  --color-surface-white: #f8bc24;/*#################*/
   --color-pink: #fec5fb;
   --color-shockingly-pink: #f100cb;
   --color-orangey: #ff8709;
@@ -566,6 +566,11 @@ button {
   background-color: #28a92b;
   background-image: var(--gradient-macha);
 }
+.panel.yellow {
+  background-color: #f8bc24;
+  background-image: var(--gradient-lipstick);
+}
+
 
 /* SCROLL DOWN */
 .scroll-down {
