@@ -104,7 +104,7 @@ const ImagesPage = () => {
 
       setLoading(true);
       try { /* locomotion-back-d60dee4c012c.herokuapp.com */ 
-        const response = await axios.post('http://127.0.0.1:5000/process-video', formData, {
+        const response = await axios.post('https://locomotion-back-d60dee4c012c.herokuapp.com/process-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
