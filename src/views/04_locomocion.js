@@ -1,3 +1,5 @@
+// src/views/ImagesPage.js
+
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -5,6 +7,9 @@ import './ImagesPage.css';
 import axios from 'axios';
 import ClipLoader from 'react-spinners/ClipLoader'; // Importing a spinner for loading indicator
 import JSZip from 'jszip';
+
+import * as THREE from 'three';
+import ThreeDVisualization from './ThreeDVisualization';
 
 import imageOne from '../images/locomocion_01.jpg';
 import videoFile_01 from '../videos/locomocion_01.webm';
@@ -19,13 +24,13 @@ const ImagesPage = () => {
   const [processedImage, setProcessedImage] = useState(null); // Added state for processed image
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [keypointsData, setKeypointsData] = useState([]);
 
   // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-    
-    
+
   // GSAP animations
   useEffect(() => {
     sectionsRef.current.forEach((section) => {
@@ -98,8 +103,8 @@ const ImagesPage = () => {
       formData.append('video', file);
 
       setLoading(true);
-      try {/* localhost:5000  locomotion-back-d60dee4c012c.herokuapp.com */
-        const response = await axios.post('https://locomotion-back-d60dee4c012c.herokuapp.com/process-video', formData, {
+      try { /* locomotion-back-d60dee4c012c.herokuapp.com */ 
+        const response = await axios.post('http://127.0.0.1:5000/process-video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -127,14 +132,14 @@ const ImagesPage = () => {
           setProcessedImage(imageUrl);
         }
 
-        // Optionally handle keypoints.json
+        // Handle keypoints.json
         const keypointsFile = zip.file("keypoints.json");
         if (keypointsFile) {
-          const keypointsData = await keypointsFile.async("string");
-          const keypoints = JSON.parse(keypointsData);
-                        
+          const keypointsDataString = await keypointsFile.async("string");
+          const keypoints = JSON.parse(keypointsDataString);
+          console.log("Loaded keypoints:", keypoints);
+          setKeypointsData(keypoints); // Store keypoints data
         }
-
 
       } catch (err) {
         console.error('Error processing video:', err);
@@ -144,8 +149,7 @@ const ImagesPage = () => {
       }
     }
   };
-    
-    
+
   const videoList = [
     {
       id: 'video1',
@@ -166,156 +170,168 @@ const ImagesPage = () => {
       thumbnailHighResUrl: '/video_test/thumbnails/thumbnail3_regular@2x.jpg',
     },
   ];
-    
 
-return (
-  <main className="images-page">
-    {/* Section with the image */}
-    <section className="media-section" ref={addToRefs}>
-      <div className="media-content">
-        <img
-          className="media"
-          src={imageOne}
-          alt="Innovative Vision Systems"
-          loading="lazy"
-        />
-        <h2 className="headline">
-          Sistemas de Detección Temprana de Problemas de Locomoción
-        </h2>
-        <p className="description">
-          Estos sistemas emplean inteligencia artificial y visión por computadora para monitorear el movimiento de los animales, detectando de manera temprana cualquier anomalía en su locomoción. Esto permite identificar problemas de salud y mejorar el bienestar animal de forma proactiva.
-        </p>
-      </div>
-    </section>
+  return (
+    <main className="images-page">
+      {/* Section with the image */}
+      <section className="media-section" ref={addToRefs}>
+        <div className="media-content">
+          <img
+            className="media"
+            src={imageOne}
+            alt="Innovative Vision Systems"
+            loading="lazy"
+          />
+          <h2 className="headline">
+            Sistemas de Detección Temprana de Problemas de Locomoción
+          </h2>
+          <p className="description">
+            Estos sistemas emplean inteligencia artificial y visión por computadora para monitorear el movimiento de los animales, detectando de manera temprana cualquier anomalía en su locomoción. Esto permite identificar problemas de salud y mejorar el bienestar animal de forma proactiva.
+          </p>
+        </div>
+      </section>
 
-    {/* Section with the first video */}
-    <section className="media-section" ref={addToRefs}>
-      <div className="media-content">
-        <video
-          className="media"
-          src={videoFile_01}
-          controls
-          aria-label="Video demonstrating key point detection in animal locomotion"
-        />
-        <h2 className="headline">Detección de Puntos Clave</h2>
-        <p className="description">
-          El sistema detectar puntos clave en el cuerpo del animal, generando un esqueleto simplificado que permite monitorear su movimiento. A través del análisis de la locomoción, puede detectar anomalías como cojeras o movimientos asimétricos, emitiendo alertas tempranas que ayudan a prevenir problemas de salud y mejorar el bienestar animal.
-        </p>
-      </div>
-    </section>
+      {/* Section with the first video */}
+      <section className="media-section" ref={addToRefs}>
+        <div className="media-content">
+          <video
+            className="media"
+            src={videoFile_01}
+            controls
+            aria-label="Video demonstrating key point detection in animal locomotion"
+          />
+          <h2 className="headline">Detección de Puntos Clave</h2>
+          <p className="description">
+            El sistema detectar puntos clave en el cuerpo del animal, generando un esqueleto simplificado que permite monitorear su movimiento. A través del análisis de la locomoción, puede detectar anomalías como cojeras o movimientos asimétricos, emitiendo alertas tempranas que ayudan a prevenir problemas de salud y mejorar el bienestar animal.
+          </p>
+        </div>
+      </section>
 
-    {/* Section with the second video */}
-    <section className="media-section" ref={addToRefs}>
-      <div className="media-content">
-        <video
-          className="media"
-          src={videoFile_02}
-          controls
-          aria-label="Video showcasing identification in low visibility conditions"
-        />
-        <h2 className="headline">
-          Identificación en Situaciones de Visibilidad Reducida
-        </h2>
-        <p className="description">
-          La herramienta tiene capacidad para funcionar incluso en ambientes con oclusión parcial de los puntos clave. Esto es particularmente útil en entornos de granja donde los animales pueden estar obstruidos por objetos o barreras.
-        </p>
-      </div>
-    </section>
+      {/* Section with the second video */}
+      <section className="media-section" ref={addToRefs}>
+        <div className="media-content">
+          <video
+            className="media"
+            src={videoFile_02}
+            controls
+            aria-label="Video showcasing identification in low visibility conditions"
+          />
+          <h2 className="headline">
+            Identificación en Situaciones de Visibilidad Reducida
+          </h2>
+          <p className="description">
+            La herramienta tiene capacidad para funcionar incluso en ambientes con oclusión parcial de los puntos clave. Esto es particularmente útil en entornos de granja donde los animales pueden estar obstruidos por objetos o barreras.
+          </p>
+        </div>
+      </section>
 
-    {/* Section for uploading and processing videos */}
-    <section className="media-section" ref={addToRefs}>
-      <div className="media-content">
-        <h2 className="headline">Sube tu Propio Video</h2>
-        <p className="description">
-          Puedes subir un video (3-5 segundos) para analizar la locomoción de tus animales utilizando nuestras herramientas de detección y análisis.
-        </p>
+      {/* Section for uploading and processing videos */}
+      <section className="media-section" ref={addToRefs}>
+        <div className="media-content">
+          <h2 className="headline">Sube tu Propio Video</h2>
+          <p className="description">
+            Puedes subir un video (3-5 segundos) para analizar la locomoción de tus animales utilizando nuestras herramientas de detección y análisis.
+          </p>
 
-        <button onClick={() => fileInputRef.current.click()}>
-          Sube tu Video
-        </button>
-        <input
-          type="file"
-          accept="video/*"
-          onChange={handleVideoUpload}
-          ref={fileInputRef}
-          style={{ display: 'none' }} // Hide the default input
-        />
+          <button onClick={() => fileInputRef.current.click()}>
+            Sube tu Video
+          </button>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={handleVideoUpload}
+            ref={fileInputRef}
+            style={{ display: 'none' }} // Hide the default input
+          />
 
-        <p className="description">
-          Puede descargar y utilizar nuestros vídeos de prueba.
-        </p>
+          <p className="description">
+            Puede descargar y utilizar nuestros vídeos de prueba.
+          </p>
 
-        {loading && (
-          <div className="loading">
-            <ClipLoader color="#123abc" loading={loading} size={50} />
-            <p style={{ color: '#000000' }}>Procesando el video, por favor espere...</p>
+          {loading && (
+            <div className="loading">
+              <ClipLoader color="#123abc" loading={loading} size={50} />
+              <p style={{ color: '#000000' }}>Procesando el video, por favor espere...</p>
+            </div>
+          )}
+
+          {error && (
+            <div style={{ color: 'red' }} className="error-message">
+              <p>{error}</p>
+            </div>
+          )}
+
+          {/* Video Gallery */}
+          <div className="video-gallery">
+            {videoList.map((video) => (
+              <div key={video.id} className="video-item">
+                <a href={video.videoUrl} download={`${video.id}.mp4`}>
+                  <img
+                    src={video.thumbnailUrl}
+                    alt={`Thumbnail of ${video.id}`}
+                    className="video-thumbnail"
+                  />
+                </a>
+              </div>
+            ))}
           </div>
-        )}
 
-        {error && (
-          <div style={{ color: 'red' }} className="error-message">
-            <p>{error}</p>
-          </div>
-        )}
-
-        {/* Video Gallery */}
-        <div className="video-gallery">
-          {videoList.map((video) => (
-            <div key={video.id} className="video-item">
-              <a href={video.videoUrl} download={`${video.id}.mp4`}>
-                <img
-                  src={video.thumbnailUrl}
-                  alt={`Thumbnail of ${video.id}`}
-                  className="video-thumbnail"
-                />
+          {processedVideo && (
+            <div>
+              <h3 style={{ color: '#000000' }}>Video Procesado:</h3>
+              <video
+                className="media"
+                src={processedVideo}
+                controls
+                aria-label="Processed video with skeleton"
+              />
+              <a
+                href={processedVideo}
+                download="processed_video.webm"
+                className="download-link"
+              >
+                Descargar Video Procesado
               </a>
             </div>
-          ))}
+          )}
+
+
+{keypointsData && Object.keys(keypointsData).length > 0 && (
+  <div>
+    <h3 style={{ color: '#000000' }}>Visualización 3D:</h3>
+    <ThreeDVisualization keypointsData={keypointsData} />
+  </div>
+)}
+
+
+
+          {processedImage && (
+            <div>
+              <h3 style={{ color: '#000000' }}>Resultados del Análisis:</h3>
+              <p style={{ color: '#000000' }}>
+                Comparación de características de locomoción (adimensionales) entre la vaca
+                analizada (barra roja) y la distribución de la población con locomoción
+                normal (curvas negras). Las líneas azules representan la media de la
+                población, y las líneas verdes punteadas indican los límites del intervalo
+                de confianza.
+              </p>
+              <p style={{ color: '#000000' }}>
+                Una vaca sin problemas de locomoción muestra una barra roja cerca del
+                promedio de la distribución de la población.
+              </p>
+              <img src={processedImage} alt="Processed frame" className="media" />
+              <a href={processedImage} download="histograms.jpg" className="download-link">
+                Descargar Imagen
+              </a>
+            </div>
+          )}
+
+
+
         </div>
-
-        {processedVideo && (
-          <div>
-            <h3 style={{ color: '#000000' }}>Video Procesado:</h3>
-            <video
-              className="media"
-              src={processedVideo}
-              controls
-              aria-label="Processed video with skeleton"
-            />
-            <a
-              href={processedVideo}
-              download="processed_video.webm"
-              className="download-link"
-            >
-              Descargar Video Procesado
-            </a>
-          </div>
-        )}
-
-        {processedImage && (
-          <div>
-            <h3 style={{ color: '#000000' }}>Resultados del Análisis:</h3>
-            <p style={{ color: '#000000' }}>
-              Comparación de características de locomoción (adimensionales) entre la vaca
-              analizada (barra roja) y la distribución de la población con locomoción
-              normal (curvas negras). Las líneas azules representan la media de la
-              población, y las líneas verdes punteadas indican los límites del intervalo
-              de confianza.
-            </p>
-            <p style={{ color: '#000000' }}>
-              Una vaca sin problemas de locomoción muestra una barra roja cerca del
-              promedio de la distribución de la población.
-            </p>
-            <img src={processedImage} alt="Processed frame" className="media" />
-            <a href={processedImage} download="histograms.jpg" className="download-link">
-              Descargar Imagen
-            </a>
-          </div>
-        )}
-      </div>
-    </section>
-  </main>
-);
+      </section>
+    </main>
+  );
 };
 
 export default ImagesPage;
