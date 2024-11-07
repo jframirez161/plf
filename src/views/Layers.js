@@ -9,6 +9,7 @@ import imageTwo from '../images/cowID_01.png';
 import imageThree from '../images/conteo_01.png';
 import imageFour from '../images/locomocion_01.jpg';
 import imageFive from '../images/team.png';
+import imageSix from '../images/CODI_2024.png';
 
 import TransitionContext from '../context/TransitionContext';
 
@@ -130,8 +131,19 @@ export default function Layers() {
           />
         </Link>      
       </section>
+      
+    <section className="panel light">        
+      <h1 ref={titleRef}>Simulación y Evaluación de Prácticas Sostenibles y Regenerativas en Fincas Lecheras.</h1>
+        <Link to="/basgra">
+          <img
+            ref={imageRef}
+            src={imageSix}
+            className="stylized-image"
+          />
+        </Link> 
+      </section>
 
-      <section className="panel light">   
+      <section className="panel dark">   
       <h1 ref={titleRef}>Conteo Automático de Animales</h1>
         <Link to="/contador">
           <img
@@ -142,7 +154,7 @@ export default function Layers() {
         </Link> 
       </section>
       
-      <section className="panel dark">      
+      <section className="panel light">      
         <h1 ref={titleRef}>Identificación Automática de Animales</h1>
         <Link to="/cowID">
           <img
@@ -154,7 +166,7 @@ export default function Layers() {
       </section>
 
 
-      <section className="panel light">        
+      <section className="panel dark">        
       <h1 ref={titleRef}>Detección Temprana de Problemas de Locomoción</h1>
         <Link to="/locomocion">
           <img
@@ -165,7 +177,8 @@ export default function Layers() {
         </Link> 
       </section>
       
-    <section className="panel dark">        
+      
+    <section className="panel light">        
       <h1 ref={titleRef}>Nuestro Equipo</h1>
         <Link to="/team">
           <img
