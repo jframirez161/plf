@@ -9,7 +9,8 @@ import Metano from '../views/01_metano';
 import CowID from '../views/02_cowID';
 import Counter from '../views/03_counter';
 import Locomocion from '../views/04_locomocion';
-import Team from '../views/05_team';
+import BASGRA from '../views/05_BASGRA';
+import Team from '../views/06_team';
 
 const Router = () => {
   return (
@@ -56,6 +57,15 @@ const Router = () => {
           element={
             <TransitionComponent>
               <Locomocion /> 
+            </TransitionComponent>
+          }
+        />
+      
+        <Route
+          path="/basgra"
+          element={
+            <TransitionComponent>
+              <BASGRA /> 
             </TransitionComponent>
           }
         />

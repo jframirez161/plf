@@ -81,3 +81,53 @@
 }
 
 
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+}
+
+.calendar-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.chart-container {
+  width: 90%; /* Adjust this width as needed */
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+
+
+/* Removes any padding or margin in the main wrapper */
+.rdrDateRangeWrapper {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Targets the internal calendar wrapper to remove left spacing */
+.rdrCalendarWrapper {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* If there’s an additional inner container, center it */
+.rdrCalendar {
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+/* Removes any possible padding from the DateRangePicker itself */
+.dateRangePicker {
+    padding: 0 !important;
+    margin: 0 auto !important;
+}
