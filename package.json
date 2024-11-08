@@ -20,7 +20,8 @@
     "react-spinners": "^0.14.1",
     "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
-    "three": "^0.126.1"
+    "three": "^0.126.1",
+    "three-obj-mtl-loader": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

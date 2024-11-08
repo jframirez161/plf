@@ -12,6 +12,7 @@ import {
   Legend
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import ThreeFarm from './05a_ThreeFarm'; 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, annotationPlugin);
 
@@ -277,7 +278,6 @@ const adjustedRandomnessFactors = Object.fromEntries(
     setDvbData([]); // Clear dv_b data
   };
     
-    console.log(weatherData[0])
 
   // Function to send weather data to the server
   const sendWeatherData = async () => {
@@ -285,7 +285,7 @@ const adjustedRandomnessFactors = Object.fromEntries(
       const response = await axios.post('https://locomotion-back-d60dee4c012c.herokuapp.com/process-basgra', weatherData, {
         headers: { 'Content-Type': 'application/json' },
       });
-      console.log('Response from server:', response.data);        
+      //console.log('Response from server:', response.data);        
       // Store the gv_b and dv_b data in state
       setGvbData(response.data.gv_b);
       setDvbData(response.data.dv_b);
@@ -326,6 +326,14 @@ const adjustedRandomnessFactors = Object.fromEntries(
          </div>
 
       </section>
+      
+<section style={{ width: '80%', margin: '0 auto', marginTop: '20px', paddingBottom: '40px' }}>
+  <div className="App" style={{ backgroundColor: '#f0f0f0', color: '#000', padding: '20px', borderRadius: '8px' }}>
+    <h1 style={{ textAlign: 'center' }}>Módulo de Diseño de Granja</h1>
+    <ThreeFarm />
+  </div>
+</section>
+
       
       <section style={{ width: '80%', margin: '0 auto' }}>
         <div className="App" style={{ backgroundColor: '#f0f0f0', color: '#000' }}>
