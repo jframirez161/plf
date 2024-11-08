@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { debounce } from 'lodash';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { Group, Color, Matrix4 } from 'three';
 
 const ThreeFarm = () => {
   const containerRef = useRef(null);
@@ -97,10 +99,67 @@ const ThreeFarm = () => {
 
       // Initial farm setup
       updateFarm(area, divisions, treesPerFence, cows);
+        
+     // Load the OBJ model
+      loadOBJModel(scene, '/assets/panel.obj', new THREE.Vector3(5, 0, 0), 1, 50);
 
       // Start animation
       animate();
     }
+      
+     
+      // Function to load an OBJ file
+function loadOBJModel(scene, filePath, position, scale, count) {
+  const loader = new OBJLoader();
+
+  loader.load(
+    filePath,
+    (object) => {
+      if (!(object instanceof Group)) {
+        console.error("Loaded object is not a Group.");
+        return;
+      }
+
+      // Set colors for the two meshes inside the group
+      object.children.forEach((mesh, index) => {
+        if (mesh.isMesh) {
+          mesh.material.color = new Color(index % 2 === 0 ? 0x808080  : 0x0000ff);
+        }
+      });
+
+      object.scale.set(scale, scale, scale);
+
+      // Create multiple instances and position them side by side
+      for (let i = 0; i < count; i++) {
+        // Clone the original object
+        const instance = object.clone();
+
+        // Position each instance side by side along the X-axis
+        const spacing = 2.3; // Adjust this value to control spacing
+        instance.position.set(position.x + i * spacing, position.y, position.z);
+
+        // Add the instance to the scene
+        scene.add(instance);
+      }
+
+      console.log(`Successfully created ${count} instances side by side.`);
+    },
+    (xhr) => {
+      console.log(`Loading model: ${(xhr.loaded / xhr.total) * 100}% complete`);
+    },
+    (error) => {
+      console.error('Error loading OBJ file:', error);
+    }
+  );
+}
+
+
+
+
+      
+      
+      
+      
 
     // Clear existing farm elements
     function clearScene() {
