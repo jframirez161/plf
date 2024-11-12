@@ -432,7 +432,16 @@ const adjustedRandomnessFactors = Object.fromEntries(
       <section style={{ width: '80%', margin: '0 auto' }}>
         <div className="App" style={{ backgroundColor: '#f0f0f0', color: '#000' }}>
           <h1>Módulo de Producción de Pasto</h1>
-          <button onClick={sendWeatherData} style={{ marginLeft: '10px' }}>
+          <button onClick={sendWeatherData} 
+          style={{
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            marginTop: '20px',
+          }}
+              >
             Calcular la Producción de Biomasa Verde y Muerta de Pasto (kg MS/ha)
           </button>
           <p>Modelo BASGRA.</p>
